@@ -1,0 +1,27 @@
+{
+  "name": "voting-app",
+  "version": "1.0.0",
+  "description": "Voting App that allows you to post public polls",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edmondnow/voting-app.git"
+  },
+  "keywords": [
+    "voting",
+    "node"
+  ],
+  "author": "edmondnow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edmondnow/voting-app/issues"
+  },
+  "homepage": "https://github.com/edmondnow/voting-app#readme",
+  "dependencies": {
+    "ejs": "^2.5.7",
+    "express": "^4.16.2"
+  }
+}

@@ -1,0 +1,86 @@
+
+.navbar-light {
+	background-color:  #e3f2fd;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.container-fluid{
+	padding: 0px !important;
+	margin: 0px ! important;
+}
+
+#logo {
+	width: 40px;
+}
+
+
+.home, .nav-link{
+	color: black !important;
+	font-size: 1em;
+}
+
+.votex {
+	font-family: 'Audiowide', cursive;
+}
+
+h1 {
+	text-align: center;
+	color: white;
+	text-shadow: 2px 0px 0px black;
+
+}
+
+.jumbotron-fluid{
+	padding: 20px !important;
+	background-color: #3DC8FA;
+}
+
+.desc {
+	text-align: center;
+	color: white;
+	font-family: 'Bitter', serif;
+	text-shadow: 0.5px 0px 0px black;
+	margin-top: 20px;
+}
+
+.desc-info{
+	color: black;
+		font-family: 'Bitter', serif;
+}
+
+.desc-cont {
+	max-width: 70%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+h2 {
+	margin-top: 10px;
+}
+
+.btn {
+	margin: 15px;
+}
+
+.info {
+	padding: 40px !important;
+	background-color: #F3F3F3;
+}
+
+.fa {
+
+	text-align: center; 
+}
+
+.fa-globe {
+	color: #06DA0B;
+}
+
+.fa-share-square{
+	color: #AE00F8;
+}
+
+.fa-wifi {
+	color: #00B3F8;
+}
