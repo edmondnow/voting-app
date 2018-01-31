@@ -1,0 +1,29 @@
+
+
+/* Landing Page */
+
+.navbar-light {
+	background-color:  #e3f2fd;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.container-fluid{
+	padding: 0px !important;
+	margin: 0px ! important;
+}
+
+#logo {
+	width: 40px;
+}
+
+
+.home, .nav-link{
+	color: black !important;
+	font-size: 1em;
+}
+
+.votex {
+	font-family: 'Audiowide', cursive;
+	
+}
