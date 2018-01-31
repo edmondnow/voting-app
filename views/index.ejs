@@ -2,14 +2,18 @@
 <html>
 <head>
 	<title>Voting App</title>
+
+	<!-- CDNs -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="./assets/style.css">
 	<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
-	<!-- External -->
+	<!-- Internal -->
+	<link rel="stylesheet" type="text/css" href="./assets/style.css">
+	<script src="assets/index.js"></script>
+	<!-- External Styles-->
 	<link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -86,20 +90,20 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-			<form>
+			<form action="/login" method="post" enctype="multipart/form-data">>
 			  <div class="form-group">
 			    <label for="inputUsername">Username</label>
-			    <input type="email" class="form-control" id="inputUsernam" placeholder="Enter username">
+			    <input type="email" class="form-control" id="loginUsername" placeholder="Enter username">
 			  </div>
 			  <div class="form-group">
 			    <label for="inputPassword">Password</label>
-			    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+			    <input type="password" class="form-control" id="loginPassword" placeholder="Password">
 			  </div>
 			  <div class="form-check">
-			    <input type="checkbox" class="form-check-input" id="check">
+			    <input type="checkbox" class="form-check-input" id="loginCheck">
 			    <label class="form-check-label" for="check">Remember me</label>
 			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <button type="submit" class="btn btn-primary" id="loginSubmit">Submit</button>
 			</form>
 	      </div>
 	      <div class="modal-footer">
@@ -120,21 +124,22 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-			<form>
+			<form method="post" action="/sign" enctype='multipart/form-data'>
+			<div class="form-group">
+			    <label for="inputEmail">Email</label>
+			    <input type="email" name="email" class="form-control" id="signEmail" placeholder="Enter email address">
+			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			  </div>
 			  <div class="form-group">
-			    <label for="inputUsername">Email</label>
-			    <input type="email" class="form-control" id="inputUsernam" placeholder="Enter username">
+			    <label for="inputUsername">Username</label>
+			    <input type="text"  name="username" class="form-control" id="signUsername" placeholder="Enter username" pattern=".{6,15}"   required title="6 characters minimum, maximum 15.">
 			  </div>
 			  <div class="form-group">
 			    <label for="inputPassword">Password</label>
-			    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+			    <input type="password" name="password" class="form-control" id="signPassword" placeholder="Password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
 			  </div>
-			  <button type="submit" class="btn btn-primary">Submit</button>
+			  <button type="submit" class="btn btn-primary" id="signSubmit">Submit</button>
 			</form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
 	      </div>
 	    </div>
 	  </div>
