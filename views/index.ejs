@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Voting App</title>
@@ -8,7 +7,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="./assets/style.css">
-
+	<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
 	<!-- External -->
 	<link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
@@ -32,10 +31,10 @@
 		    </ul>
 		    <ul class="navbar-nav ml-auto">
 		    	<li class="nav-item">
-		        	<a class="nav-link" href="#">Sign-up</a>
+		        	<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-sign">Sign-up</a>
 		     	 </li>
 		     	 <li class="nav-item">
-		        	<a class="nav-link" href="#">Login</a>
+		        	<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-login">Login</a>
 		     	 </li>
 		    </ul>
 		  </div>
@@ -45,7 +44,7 @@
 		<h1 class="votex">VoteX</h1>
 		<p class="desc">Chillwave gochujang hot chicken XOXO mlkshk street art.</p>
 		<div class="text-center">
-		<button type="button" class="btn btn-success btn-lg">Sign-up</button>
+		<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-sign">Sign-up</button>
 		</div>
 	</div>
 	<div class="container-fluid info">
@@ -73,6 +72,72 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="container-fluid text-center footer">
+		<p>for FreeCodeCamp - @edmondnow</p>
+	</div>
+	<!-- Login Modal -->
+	<div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalLabel">Login</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<form>
+			  <div class="form-group">
+			    <label for="inputUsername">Username</label>
+			    <input type="email" class="form-control" id="inputUsernam" placeholder="Enter username">
+			  </div>
+			  <div class="form-group">
+			    <label for="inputPassword">Password</label>
+			    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+			  </div>
+			  <div class="form-check">
+			    <input type="checkbox" class="form-check-input" id="check">
+			    <label class="form-check-label" for="check">Remember me</label>
+			  </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Sign-up Modal -->
+	<div class="modal fade" id="modal-sign" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modalLabel">Sign-up</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+			<form>
+			  <div class="form-group">
+			    <label for="inputUsername">Email</label>
+			    <input type="email" class="form-control" id="inputUsernam" placeholder="Enter username">
+			  </div>
+			  <div class="form-group">
+			    <label for="inputPassword">Password</label>
+			    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+			  </div>
+			  <button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </body>
 </html>
