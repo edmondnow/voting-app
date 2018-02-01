@@ -4,11 +4,10 @@
 	<title>Voting App</title>
 
 	<!-- CDNs -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
 	<!-- Internal -->
 	<link rel="stylesheet" type="text/css" href="./assets/dashboardstyle.css">
@@ -42,6 +41,34 @@
 		    </ul>
 		  </div>
 		</nav>
+	</div>
+	<div class="container-fluid text-center banner">
+		<h1>Dashboard</h1>
+		<h3>What would you like to poll?</h3>
+		<button class="btn btn-success btn-lg" id="newpoll">New Poll</button>
+		<button class="btn btn-info btn-lg">My Polls</button>
+	</div>
+	<div class="container-fluid new-poll text-center">
+		<h2>New Poll</h2>
+		<form method="post" action="/new" target="#" enctype="multipart/form-data" class="text-center">
+			<label for="pollQ">What is your poll about?</label>
+			<div class="option">
+			<input class="form-control" type="text" id="pollQ" placeholder="Dota, League or Heroes?">
+			</div>
+			<label id="beginning">Add poll options</label>
+			<div class="option">
+			<input class="form-control" type="text" placeholder="Dota, for sure."><i class="fa fa-times icon"></i>
+			</div>
+			<div class="option">
+			<input class="form-control" type="text" placeholder="League, of course!"><i class="fa fa-times icon"></i>
+			</div>
+			<div class="option">
+			<input class="form-control" type="text" placeholder="Heroes. Umh, Blizzard rocks?"><i class="fa fa-times"></i>
+			</div>
+			<button class="btn btn-md btn-info" id="addoption" type="button">Add options</button><br />
+			<input class="btn btn-md btn-success" type="submit">
+		</form>
+
 	</div>
 </body>
 </html>
