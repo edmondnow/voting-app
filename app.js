@@ -4,17 +4,11 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const multer = require("multer");
 var upload = multer();
-var User = require("./models/user.js");
+var User = require("./models/user.js").user;
+var Poll = require("./models/user.js").poll;
 var session = require("express-session");
+var MongoStore = require("connect-mongo")(session);
 
-
-//use sessions for tracking logins
-app.use(session({
-	secret: 'work hard',
-	resave: true,
-	saveUninitialized: false
-
-}))
 
 //setup view engine
 app.set('view engine', 'ejs');
@@ -29,6 +23,16 @@ mongoose.connection.once('open', function(){
 	console.log("Connection error: " + error);
 })
 
+//use sessions for tracking logins
+app.use(session({
+  secret: 'work hard',
+  resave: true,
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
+}));
+
 //setup static files
 app.use('/assets', express.static('assets'));
 
@@ -37,10 +41,6 @@ app.listen(process.env.port || 3000);
 console.log('Now listening to requests.');
 
 
-//setup landing page
-app.get('', function(req, res){
-	res.render('index'); //pass later objects collected from poll collection
-});
 
 
 //setup registration and login
@@ -87,22 +87,70 @@ app.post('/', upload.array(), function(req, res, next){
 	}
 });
 
+app.post('/poll', upload.array(), function(req, res, next){
+
+	var pollData = {
+		question: req.body.question,
+		item: []
+	};
+	for(var i = 0; i< req.body.item.length; i++){
+			pollData.item.push([req.body.item[i], 0]);
+	}
+	console.log(pollData);
+});
+
+
+//logout functionality
+
+app.get('/logout', function(req, res,next){
+	if(req.session){
+		//delete session object
+		req.session.destroy(function(err){
+			if(err){
+				return next(err);
+			} else {
+				return res.redirect('/');
+			}
+		});
+	}
+});
+
+
+//setup landing page
+app.get('', function(req, res){
+	var signup ='<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-sign">Sign-Up</a>';
+	var login = '<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-login">Login</a>';
+	var logout = '<a class="nav-link" href="/logout">Logout</a>';
+
+	User.findById(req.session.userId).
+	exec(function(error, user){
+		if(error){
+			return next(error)
+		} else if (req.session&&user!=null){
+			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			res.render('index', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
+		} else {
+			res.render('index', {session: false, login: login,  logout: logout, signup: signup})
+		}
+	});
+});
 
 
 //setup dashboard page
 app.get('/vote', function(req, res){
-	console.log(req.session.usedId);
-	/*
 	User.findById(req.session.userId)
 	.exec(function (error, user){
 		if(error){
 			return next(error);
 		} else {
-			res.render('vote', {name: user.name, email: user.email});
+			console.log(user);
+			res.render('vote', {name: user.username, email: user.email});
 		}
 	})
-	*/
-	res.render('vote');
+
+
+
+	
 	
 });
 

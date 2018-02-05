@@ -1,7 +1,7 @@
 $(document).ready(function(){ 
 						   
 	$("#addoption").click(function(){
-		$("#addoption").before('<div class="option"><input class="form-control" type="text" placeholder="Option wanted here!"><i class="fa fa-times"></div>')
+		$("#addoption").before('<div class="option"><input class="form-control" type="text" placeholder="Option wanted here!" name="item"><i class="fa fa-times"></div>')
 	});
 
 	$('body').on('click', 'i', function(){

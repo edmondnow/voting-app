@@ -27,16 +27,22 @@
 		  </button>
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
-		    	<li class="nav-item active">
-		    		<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		    	<li class="nav-item">
+		    		<a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+		    	</li>
+		    	<li class="nav-item nav-active">
+		    		<a class="nav-link" href="/vote">Create Poll<span class="sr-only">(current)</span></a>
+		    	</li>
+		    	<li class="nav-item">
+		    		<a class="nav-link" href="/vote">View Polls<span class="sr-only">(current)</span></a>
 		    	</li>
 		    </ul>
 		    <ul class="navbar-nav ml-auto">
 		    	<li class="nav-item">
-		        	<a class="nav-link" href="#"> <%= user.name %></a>
+		        	<a class="nav-link" href="#"> <%= name %></a>
 		     	 </li>
 		     	 <li class="nav-item">
-		        	<a class="nav-link">Logout</a>
+		        	<a class="nav-link" href="/logout">Logout</a>
 		     	 </li>
 		    </ul>
 		  </div>
@@ -50,20 +56,20 @@
 	</div>
 	<div class="container-fluid new-poll text-center">
 		<h2>New Poll</h2>
-		<form method="post" action="/new" target="#" enctype="multipart/form-data" class="text-center">
+		<form method="post" action="/poll" target="#" enctype="multipart/form-data" class="text-center">
 			<label for="pollQ">What is your poll about?</label>
 			<div class="option">
-			<input class="form-control" type="text" id="pollQ" placeholder="Dota, League or Heroes?">
+			<input class="form-control" type="text" id="pollQ" placeholder="Dota, League or Heroes?" name='question'>
 			</div>
 			<label id="beginning">Add poll options</label>
 			<div class="option">
-			<input class="form-control" type="text" placeholder="Dota, for sure."><i class="fa fa-times icon"></i>
+			<input class="form-control" type="text" placeholder="Dota, for sure." name='item'><i class="fa fa-times icon"></i>
 			</div>
 			<div class="option">
-			<input class="form-control" type="text" placeholder="League, of course!"><i class="fa fa-times icon"></i>
+			<input class="form-control" type="text" placeholder="League, of course!" name='item'><i class="fa fa-times icon"></i>
 			</div>
 			<div class="option">
-			<input class="form-control" type="text" placeholder="Heroes. Umh, Blizzard rocks?"><i class="fa fa-times"></i>
+			<input class="form-control" type="text" placeholder="Heroes. Umh, Blizzard rocks?" name='item'><i class="fa fa-times"></i>
 			</div>
 			<button class="btn btn-md btn-info" id="addoption" type="button">Add options</button><br />
 			<input class="btn btn-md btn-success" type="submit">

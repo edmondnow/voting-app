@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+		const mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
+
 
 const PollSchema = new Schema({
 	question: {
@@ -8,7 +9,9 @@ const PollSchema = new Schema({
 		required: [true, 'Question field is required']
 	},
 
-});
+	item: [[String, Number]]
+
+})
 
 
 const UserSchema = new Schema({
@@ -34,7 +37,11 @@ const UserSchema = new Schema({
 		required: [true, 'Password field is required'],
 		minlength: 8
 	},
+
+	polls: [PollSchema]
 });
+
+
 
 //authenticate input against database
 UserSchema.statics.authenticate = function (email, password, callback) {
@@ -88,5 +95,8 @@ UserSchema.pre('save', function(next){
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports = User;
+const Poll = mongoose.model('Poll', PollSchema);
+
+module.exports.user = User;
+module.exports.poll = Poll;
 
