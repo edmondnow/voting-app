@@ -9,7 +9,7 @@ const PollSchema = new Schema({
 		required: [true, 'Question field is required']
 	},
 
-	item: [[String, Number]]
+	items: [{pollItem: String, pollCount: Number}]
 
 })
 
@@ -38,7 +38,7 @@ const UserSchema = new Schema({
 		minlength: 8
 	},
 
-	polls: [PollSchema]
+	polls: [{question: {type: String, required: [true, 'Question is required']}, items: []}]
 });
 
 
@@ -95,8 +95,5 @@ UserSchema.pre('save', function(next){
 
 const User = mongoose.model('User', UserSchema);
 
-const Poll = mongoose.model('Poll', PollSchema);
-
-module.exports.user = User;
-module.exports.poll = Poll;
+module.exports = User;
 

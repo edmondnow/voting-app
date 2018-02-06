@@ -4,8 +4,7 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const multer = require("multer");
 var upload = multer();
-var User = require("./models/user.js").user;
-var Poll = require("./models/user.js").poll;
+var User = require("./models/user.js");
 var session = require("express-session");
 var MongoStore = require("connect-mongo")(session);
 
@@ -91,13 +90,23 @@ app.post('/poll', upload.array(), function(req, res, next){
 
 	var pollData = {
 		question: req.body.question,
-		item: []
+		items: []
 	};
 	for(var i = 0; i< req.body.item.length; i++){
-			pollData.item.push([req.body.item[i], 0]);
+
+		pollData.items.push([req.body.item[i], 0]);
+
 	}
 	console.log(pollData);
+	console.log(req.session.userId)
+
+	User.findOne({_id:req.session.userId}, function(error, user){
+		user.polls.push(pollData);
+		user.save()
+	});
+	
 });
+		
 
 
 //logout functionality
