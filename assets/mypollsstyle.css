@@ -1,0 +1,98 @@
+
+
+/* Landing Page */
+
+.navbar-light {
+	background-color:  #e3f2fd;
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.container-fluid{
+	padding: 0px !important;
+	margin: 0px ! important;
+}
+
+#logo {
+	width: 40px;
+}
+
+
+.home, .nav-link{
+	color: black !important;
+	font-size: 1em;
+}
+
+.votex {
+	font-family: 'Audiowide', cursive;
+
+}
+
+.form-control {
+	width: 20%;
+	min-width: 300px !important;
+	margin: 0px !important;
+}
+
+.banner {
+
+	padding: 40px !important;
+	background-color: #3DC8FA;
+
+}
+
+.new-poll {
+	padding: 20px !important;
+}
+h1 {
+	margin-bottom: 20px;
+	text-shadow: 2px 0px 0px black;
+}
+
+.btn-lg{
+	margin: 20px 0px;
+
+}
+
+input[type="submit"] {
+	width: 112px;
+	margin-top: 10px;
+}
+
+h1, h3 {
+	color: white;
+	text-shadow: 2px 0px 0px black;
+}
+
+.option {
+	margin: 0 auto;
+	width: 310px;
+	text-align: right;
+}
+
+i {
+	display: inline;
+	position: relative;
+	bottom: 32px;
+	left: 20px;
+	opacity: 0.6;
+}
+
+i:hover {
+	opacity: 1;
+}
+
+#beginning {
+	margin-top: 10px !important;
+}
+
+.icon {
+	visibility: hidden;
+}
+
+/* ------------------------------------------ new styles --------------------------------------- */
+
+.pollChart {
+	width: 80%;
+	height: 80%;
+}

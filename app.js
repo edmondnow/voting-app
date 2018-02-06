@@ -3,11 +3,12 @@ const app = express();
 const fs = require('fs');
 const mongoose = require('mongoose');
 const multer = require("multer");
-var upload = multer();
-var User = require("./models/user.js");
-var session = require("express-session");
-var MongoStore = require("connect-mongo")(session);
-
+const upload = multer();
+const User = require("./models/user.js");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const chart = require('chart.js');
+const lint = require('ejs-lint');
 
 //setup view engine
 app.set('view engine', 'ejs');
@@ -104,6 +105,8 @@ app.post('/poll', upload.array(), function(req, res, next){
 		user.polls.push(pollData);
 		user.save()
 	});
+
+	res.redirect('/mypolls');
 	
 });
 		
@@ -123,6 +126,20 @@ app.get('/logout', function(req, res,next){
 		});
 	}
 });
+
+//setup mypolls page
+app.get('/mypolls', function(req, res, next){
+	User.findById(req.session.userId)
+	.exec(function (error, user){
+		if(error){
+			return next(error);
+		} else {
+			console.log(user);
+			res.render('mypolls', {name: user.username, email: user.email});
+		}
+	})
+})
+
 
 
 //setup landing page
@@ -146,14 +163,14 @@ app.get('', function(req, res){
 
 
 //setup dashboard page
-app.get('/vote', function(req, res){
+app.get('/create', function(req, res){
 	User.findById(req.session.userId)
 	.exec(function (error, user){
 		if(error){
 			return next(error);
 		} else {
 			console.log(user);
-			res.render('vote', {name: user.username, email: user.email});
+			res.render('create', {name: user.username, email: user.email});
 		}
 	})
 
