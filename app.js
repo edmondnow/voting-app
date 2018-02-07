@@ -9,6 +9,11 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const chart = require('chart.js');
 const lint = require('ejs-lint');
+const bodyParser = require('body-parser');
+
+
+
+app.use(bodyParser.json({ extended: true }));
 
 //setup view engine
 app.set('view engine', 'ejs');
@@ -66,7 +71,7 @@ app.post('/', upload.array(), function(req, res, next){
 				return next(error);
 			} else {
 				req.session.userId = user._id;
-				return res.redirect('/vote');
+				return res.redirect('/create');
 			}
 		});
 	} else if (req.body.logemail && req.body.logpassword){
@@ -77,7 +82,7 @@ app.post('/', upload.array(), function(req, res, next){
 				return next(err);
 			} else {
 				req.session.userId = user._id;
-				return res.redirect('/vote')
+				return res.redirect('/create')
 			}
 		});
 	} else {
@@ -98,8 +103,7 @@ app.post('/poll', upload.array(), function(req, res, next){
 		pollData.items.push([req.body.item[i], 0]);
 
 	}
-	console.log(pollData);
-	console.log(req.session.userId)
+	
 
 	User.findOne({_id:req.session.userId}, function(error, user){
 		user.polls.push(pollData);
@@ -127,14 +131,27 @@ app.get('/logout', function(req, res,next){
 	}
 });
 
+app.get('/polls', function(req, res){
+	User.find({_id: req.session.userId}).exec(function(error, data){	
+		res.writeHead(200, {"Content-Type":"text/json"});	
+		var dataString = JSON.stringify(data);
+		console.log(dataString);
+		res.end(dataString);
+		 	
+	});
+
+
+
+})
+
 //setup mypolls page
 app.get('/mypolls', function(req, res, next){
+	console.log(req.session.userId);
 	User.findById(req.session.userId)
 	.exec(function (error, user){
 		if(error){
-			return next(error);
+			console.log(error);
 		} else {
-			console.log(user);
 			res.render('mypolls', {name: user.username, email: user.email});
 		}
 	})
