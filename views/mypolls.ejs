@@ -34,7 +34,7 @@
 		    		<a class="nav-link" href="/create">Create Poll<span class="sr-only">(current)</span></a>
 		    	</li>
 		    	<li class="nav-item">
-		    		<a class="nav-link" href="/mypolls">View Polls<span class="sr-only">(current)</span></a>
+		    		<a class="nav-link" href="/mypolls">My Polls<span class="sr-only">(current)</span></a>
 		    	</li>
 		    </ul>
 		    <ul class="navbar-nav ml-auto">
@@ -54,12 +54,17 @@
 		<button class="btn btn-success btn-lg" id="newpoll" onclick="window.location='/create';">Create Poll</button>
 	</div>
 	<div class="container-fluid new-poll text-center">
-		<div class="col-md-6">
-			<h2>My question</h2>
-			<canvas id="pollChart"></canvas>
-		</div>
-		<div class="col-md-6">
-		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h2>My question</h2>
+				<canvas id="pollChart"></canvas>
+			</div>
+			<div class="col-md-6">
+				<h3>Your polls</h3>
+				<ul class="list-group">
+				</ul>
+			</div>
+		<div class="row">
 	</div>
 </body>
 </html>

@@ -9,8 +9,10 @@ $(document).ready(function(){
     	url: "/polls",
     	contentType: 'application/json',
     	success: function(data){
-    	console.log(data[0].polls[0]);
+    	
         processData(data[0].polls[0]);
+        console.log(data[0].polls);
+        displayPolls(data[0].polls);
     	},
     	error: function(error){
     		console.log(error)
@@ -50,8 +52,6 @@ $(document).ready(function(){
     }
 
     function makeChart(items, votes, colors, borderColors){
-    	console.log(items);
-    	console.log(votes);
 	    var currentPoll = $('#pollChart');
 		var myChart = new Chart(currentPoll, {
 	    type: 'bar',
@@ -76,4 +76,13 @@ $(document).ready(function(){
 	    }
 		});
 	}
+
+    function displayPolls(polls){
+    	for(var i = polls.length-1; i>=0&&i>polls.length-10; i--){
+    		var listHtml = '<li class="list-group-item">'+ polls[i].question + '</li>';
+    		$(".list-group").append(listHtml);
+    	}
+    }
+
+
 });
