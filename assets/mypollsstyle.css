@@ -96,3 +96,22 @@ i:hover {
 	width: 80%;
 	height: 80%;
 }
+
+#yourpolls {
+	color: black;
+	text-shadow: none;
+	margin-bottom: 40px;
+}
+
+.active {
+	background-color: #3DC8FA !important;
+}
+
+li {
+	width: 80%;
+	margin: 0 auto;
+	height: 40px;
+	padding: 5px;
+	font-size: 0.9em;
+	cursor: pointer;
+}

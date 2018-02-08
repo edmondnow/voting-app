@@ -10,7 +10,7 @@ $(document).ready(function(){
     	contentType: 'application/json',
     	success: function(data){
     	
-        processData(data[0].polls[0]);
+        processData(data[0].polls[data[0].polls.length-1]);
         console.log(data[0].polls);
         displayPolls(data[0].polls);
     	},
@@ -78,11 +78,18 @@ $(document).ready(function(){
 	}
 
     function displayPolls(polls){
-    	for(var i = polls.length-1; i>=0&&i>polls.length-10; i--){
+    	for(var i = polls.length-1; i>=0&&i>polls.length-9; i--){
     		var listHtml = '<li class="list-group-item">'+ polls[i].question + '</li>';
     		$(".list-group").append(listHtml);
+    		if(i===polls.length-1){
+    			$(".list-group-item").addClass("active");
+    		}
     	}
     }
 
+    $('li').on('click', function(){
+    	$('li').removeClass('active');
+    	$(this)[0].addClass('active');
+    })
 
 });
