@@ -45,7 +45,9 @@ app.use('/assets', express.static('assets'));
 app.listen(process.env.port || 3000);
 console.log('Now listening to requests.');
 
-
+var signup ='<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-sign">Sign-Up</a>';
+var login = '<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-login">Login</a>';
+var logout = '<a class="nav-link" href="/logout">Logout</a>';
 
 
 //setup registration and login
@@ -161,9 +163,7 @@ app.get('/mypolls', function(req, res, next){
 
 //setup landing page
 app.get('', function(req, res){
-	var signup ='<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-sign">Sign-Up</a>';
-	var login = '<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-login">Login</a>';
-	var logout = '<a class="nav-link" href="/logout">Logout</a>';
+	
 
 	User.findById(req.session.userId).
 	exec(function(error, user){
@@ -177,6 +177,41 @@ app.get('', function(req, res){
 		}
 	});
 });
+
+
+app.get('/pollpage', function(req, res){
+	var userId;
+	var pollIndex = req.query.index;
+	if(req.session.id === null && req.session.id === undefined ){
+		userId = req.query.user;
+	} else {
+		userId = req.session.userId;
+	}
+
+	User.findById(userId)
+	.exec(function(error, user){
+		if(error){
+			console.log(error);
+		} else if (req.session!=null){
+			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			res.render('pollpage', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
+		} else {
+			res.render('pollpage', {session: false, login: login,  logout: logout, signup: signup})
+		}
+	})
+});
+	
+	
+
+
+ /*
+ User.findOne({_id: userId}).exec(function(error, result){
+	console.log(result.polls[0]);
+	});
+*/
+
+
+
 
 
 //setup dashboard page
