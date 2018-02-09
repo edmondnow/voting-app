@@ -3,15 +3,23 @@ $(document).ready(function(){
 	var votes;
 	var colors;
 	var borderColors;
+    var pollsData;
+    var myChart;
+
+    $('ul').on('click','li', function(){
+        $('li').removeClass('active');
+        $(this).addClass('active');
+        console.log(pollsData[0]);
+        processData(pollsData[0].polls[$(this).attr('id')]);
+    })
 
     $.ajax({
     	type: 'GET',
     	url: "/polls",
     	contentType: 'application/json',
     	success: function(data){
-    	
+    	pollsData = data;
         processData(data[0].polls[data[0].polls.length-1]);
-        console.log(data[0].polls);
         displayPolls(data[0].polls);
     	},
     	error: function(error){
@@ -23,6 +31,7 @@ $(document).ready(function(){
 
     function processData(data){
     	$("h2").text(data.question);
+        $("canvas").empty();
     	items = [];
     	votes = [];
     	for(var i = 0; i<data.items.length; i++){
@@ -32,6 +41,7 @@ $(document).ready(function(){
     		makeChart(items, votes, colors, borderColors);
     	}
     };
+
 
     function genColors(length){
     	colors = [];
@@ -53,7 +63,12 @@ $(document).ready(function(){
 
     function makeChart(items, votes, colors, borderColors){
 	    var currentPoll = $('#pollChart');
-		var myChart = new Chart(currentPoll, {
+        
+        if(myChart!=undefined){
+            console.log('destroy');
+            myChart.destroy();
+        }
+		myChart = new Chart(currentPoll, {
 	    type: 'bar',
 	    data: {
 	        labels: items,
@@ -79,7 +94,7 @@ $(document).ready(function(){
 
     function displayPolls(polls){
     	for(var i = polls.length-1; i>=0&&i>polls.length-9; i--){
-    		var listHtml = '<li class="list-group-item">'+ polls[i].question + '</li>';
+    		var listHtml = '<li class="list-group-item"' + ' id="' + i + '">'+ polls[i].question + '</li>';
     		$(".list-group").append(listHtml);
     		if(i===polls.length-1){
     			$(".list-group-item").addClass("active");
@@ -87,9 +102,6 @@ $(document).ready(function(){
     	}
     }
 
-    $('li').on('click', function(){
-    	$('li').removeClass('active');
-    	$(this)[0].addClass('active');
-    })
+
 
 });
