@@ -49,22 +49,38 @@
 		</nav>
 	</div>
 	<div class="container-fluid text-center banner">
-		<h1>My Polls</h1>
-		<h3>Check your polls.</h3>
+		<h1>Vote Page</h1>
+		<h3>Vote for the best option!</h3>
 		<button class="btn btn-success btn-lg" id="newpoll" onclick="window.location='/create';">Create Poll</button>
 	</div>
-	<div class="container-fluid new-poll text-center">
-		<div class="row">
-			<div class="col-md-6">
-				<h2>My question</h2>
-				<canvas id="pollChart"></canvas>
-			</div>
-			<div class="col-md-6">
-				<h3 id="yourpolls">Your polls</h3>
-				<ul class="list-group">
-				</ul>
-			</div>
-		<div class="row">
-	</div>
+	<div class="container-fluid text-center voteCont">
+				<h2>Vote</h2>
+				<form>
+					<ul class="list-group">
+						<h4><label for="form-group">Select desired field</label></h4>
+						<div class="form-group">
+							<li class="list-group-item">
+								<div class="form-check">
+								  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+									    Default checkbox
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="form-check">
+								  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+									    Default checkbox
+								</div>
+							</li>
+							<li class="list-group-item">
+								<div class="form-check">
+								  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+									    Default checkbox
+								</div>
+							</li>
+								<input class="btn btn-success" type="submit" value="Submit" id="submit"> 
+						</div>
+					</ul>
+				</form>
+			</div>		
 </body>
 </html>

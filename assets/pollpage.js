@@ -6,12 +6,13 @@ $(document).ready(function(){
     var pollsData;
     var myChart;
 
+
+
     $('ul').on('click','li', function(){
         $('li').removeClass('active');
         $(this).addClass('active');
-        console.log(pollsData[0]);
-        processData(pollsData[0].polls[$(this).attr('id')]);
-    })
+
+    });
 
     $.ajax({
     	type: 'GET',
@@ -20,7 +21,6 @@ $(document).ready(function(){
     	success: function(data){
     	pollsData = data;
         processData(data[0].polls[data[0].polls.length-1]);
-        displayPolls(data[0].polls);
     	},
     	error: function(error){
     		console.log(error)
@@ -30,7 +30,7 @@ $(document).ready(function(){
 
 
     function processData(data){
-    	$("h2").text(data.question);
+    	$("#question").text(data.question);
         $("canvas").empty();
     	items = [];
     	votes = [];
@@ -92,19 +92,6 @@ $(document).ready(function(){
 		});
 	}
 
-    function displayPolls(polls){
-    	for(var i = polls.length-1; i>=0&&i>polls.length-9; i--){
-    		var listHtml = '<li class="list-group-item"' + ' id="' + i + '">'+ polls[i].question
-            listHtml += '<button class="btn btn-sm btn-danger">Delete</button>';
-            listHtml += '<button class="btn btn-sm btn-success">Page</button></li>';
-    		$(".list-group").append(listHtml);
-    		if(i===polls.length-1){
-    			$(".list-group-item").addClass("active");
-    		}
-    	}
-
-        $('li > button').addClass('btn-custom');
-    }
 
 
 
