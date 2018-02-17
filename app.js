@@ -115,6 +115,7 @@ app.post('/poll', upload.array(), function(req, res, next){
 	res.redirect('/mypolls');
 	
 });
+
 		
 
 
@@ -134,7 +135,14 @@ app.get('/logout', function(req, res,next){
 });
 
 app.get('/polls', function(req, res){
-	User.find({_id: req.session.userId}).exec(function(error, data){	
+		var userId;
+	if(req.query){
+		userId = req.query.user;
+	} else {
+		userId = req.session.userId;
+	};
+
+	User.find({_id: userId}).exec(function(error, data){	
 		res.writeHead(200, {"Content-Type":"text/json"});	
 		var dataString = JSON.stringify(data);
 		console.log(dataString);
@@ -179,7 +187,7 @@ app.get('', function(req, res){
 });
 
 
-app.get('/pollpage', function(req, res){
+app.get('/pollpage*', function(req, res){
 	var userId;
 	var pollIndex = req.query.index;
 	if(req.session.id === null && req.session.id === undefined ){
@@ -192,11 +200,11 @@ app.get('/pollpage', function(req, res){
 	.exec(function(error, user){
 		if(error){
 			console.log(error);
-		} else if (req.session!=null){
+		} else if (req.session.userId!=undefined){
 			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
 			res.render('pollpage', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
-			res.render('pollpage', {session: false, login: login,  logout: logout, signup: signup})
+			res.render('pollpage', {session: false, login: login,  logout: logout, name: signup})
 		}
 	})
 });

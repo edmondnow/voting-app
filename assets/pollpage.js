@@ -5,23 +5,44 @@ $(document).ready(function(){
 	var borderColors;
     var pollsData;
     var myChart;
+    var user = getUrlVars()["user"];
+    var index = getUrlVars()["index"];
+
+
+    function getUrlVars(){
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
+
 
 
 
     $('ul').on('click','li', function(){
         $('li').removeClass('active');
         $(this).addClass('active');
-
+        $('input').attr('checked', false);
+        $(this).find('input').attr('checked', true);
     });
+
+
 
     $.ajax({
     	type: 'GET',
     	url: "/polls",
-    	contentType: 'application/json',
+    	contentTypes: 'application/json',
+        data: {user: user, index: index},
     	success: function(data){
     	pollsData = data;
-        processData(data[0].polls[data[0].polls.length-1]);
-    	},
+        processData(data[0].polls[index]);
+        showOptions(data[0].polls[index].items);
+    	}, 
     	error: function(error){
     		console.log(error)
     	}
@@ -41,6 +62,21 @@ $(document).ready(function(){
     		makeChart(items, votes, colors, borderColors);
     	}
     };
+
+
+    function showOptions(data){
+
+        for(var i = 0; i < data.length; i++){
+            var listItem = '';
+            listItem += '<div class="form-group"> <li class="list-group-item"> <div class="form-check">';
+            listItem += '<input class="form-check-input" type="checkbox" ' + 'value="' + data[i][0] + '" id="' + i + '">'
+            listItem += data[i][0];
+            listItem += '</div></li>';
+            $('.list-group').append(listItem);
+        }
+
+        $('list-group').append('<input class="btn btn-success" type="submit" value="Submit" id="submit">');
+    }
 
 
     function genColors(length){
