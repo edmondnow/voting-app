@@ -7,6 +7,7 @@ $(document).ready(function(){
     var myChart;
     var user = getUrlVars()["user"];
     var index = getUrlVars()["index"];
+    var poll = getUrlVars()["poll"];
 
 
     function getUrlVars(){
@@ -66,16 +67,26 @@ $(document).ready(function(){
 
     function showOptions(data){
 
+        var hiddenField = '<div class="form-group" id="hidden"> <li class="list-group-item">';
+        hiddenField += '<input type="text" ' + 'value="' + user + '" name="userId">'
+        hiddenField += '</li></div>'
+        var hiddenField2 = '<div class="form-group" id="hidden"> <li class="list-group-item">';
+        hiddenField2 += '<input type="text" ' + 'value="' + poll + '" name="pollId">'
+        hiddenField2 += '</li></div>'
+
+        $('.list-group').append(hiddenField);
+        $('.list-group').append(hiddenField2);
         for(var i = 0; i < data.length; i++){
             var listItem = '';
-            listItem += '<div class="form-group"> <li class="list-group-item"> <div class="form-check">';
-            listItem += '<input class="form-check-input" type="checkbox" ' + 'value="' + data[i][0] + '" id="' + i + '">'
+            listItem += '<div class="form-check"> <li class="list-group-item">';
+            listItem += '<input class="form-check-input" type="checkbox" ' + 'name="index" value="' + i + '">';
+            listItem += '<label class="form-check-label" for="' + i + '" >'
             listItem += data[i][0];
-            listItem += '</div></li>';
+            listItem += '</label></li></div>';
             $('.list-group').append(listItem);
         }
 
-        $('list-group').append('<input class="btn btn-success" type="submit" value="Submit" id="submit">');
+        $('.list-group').append('<input class="btn btn-success" type="submit" value="submit" id="submit"></input>');
     }
 
 

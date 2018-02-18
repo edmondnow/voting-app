@@ -135,8 +135,7 @@ app.get('/logout', function(req, res,next){
 });
 
 app.get('/polls', function(req, res){
-		var userId;
-	if(req.query){
+	if(JSON.stringify(req.query)!=='{}'){
 		userId = req.query.user;
 	} else {
 		userId = req.session.userId;
@@ -145,7 +144,6 @@ app.get('/polls', function(req, res){
 	User.find({_id: userId}).exec(function(error, data){	
 		res.writeHead(200, {"Content-Type":"text/json"});	
 		var dataString = JSON.stringify(data);
-		console.log(dataString);
 		res.end(dataString);
 		 	
 	});
@@ -161,8 +159,11 @@ app.get('/mypolls', function(req, res, next){
 	.exec(function (error, user){
 		if(error){
 			console.log(error);
+		}  else if (req.session&&user!=null){
+			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			res.render('mypolls', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
-			res.render('mypolls', {name: user.username, email: user.email});
+			res.render('mypolls', {session: false, login: login,  logout: logout, name: signup})
 		}
 	})
 })
@@ -208,6 +209,22 @@ app.get('/pollpage*', function(req, res){
 		}
 	})
 });
+
+app.get('/pollupdate',  function(req, res){
+		var pollItem = req.query.index;
+		User.findOne({_id: req.query.userId}, function(err, user){
+			if(err){
+				console.log(err);
+			} else {
+
+				user.polls.id(req.query.pollId).items[pollItem].update({$inc: {'[1]':1 }});
+				user.save();
+				console.log(user.polls.id(req.query.pollId).items[pollItem][1]);
+			};
+
+		});
+});
+		
 	
 	
 
@@ -228,9 +245,11 @@ app.get('/create', function(req, res){
 	.exec(function (error, user){
 		if(error){
 			return next(error);
+		}  else if (req.session.userId!=null){
+			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			res.render('create', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
-			console.log(user);
-			res.render('create', {name: user.username, email: user.email});
+			res.render('create', {session: false, login: login,  logout: logout, name: signup})
 		}
 	})
 
