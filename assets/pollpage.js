@@ -7,7 +7,7 @@ $(document).ready(function(){
     var myChart;
     var user = getUrlVars()["user"];
     var index = getUrlVars()["index"];
-    var poll = getUrlVars()["poll"];
+    var poll = getUrlVars()["pollid"];
 
 
     function getUrlVars(){
@@ -32,17 +32,35 @@ $(document).ready(function(){
         $(this).find('input').attr('checked', true);
     });
 
+    $('#submit').click( function(e){
+        e.preventDefault();
+        console.log($('form').serialize());
+        $.ajax({
+            type: 'GET',
+            url: '/pollupdate',
+            contentTypes: 'application/json',
+            data: $('form').serialize(),
+            success: function(data){
+                $('form').remove();
+                $('.voteCont').append('<canvas id="pollChart"></canvas>');
+                processData(data.polls[index]);
+            },
+            error: function(error){
+            console.log(error)
+        }
+        });
+    })
 
 
     $.ajax({
     	type: 'GET',
     	url: "/polls",
     	contentTypes: 'application/json',
-        data: {user: user, index: index},
+        data: {user: user, index: index, pollid: poll},
     	success: function(data){
     	pollsData = data;
-        processData(data[0].polls[index]);
-        showOptions(data[0].polls[index].items);
+        console.log(pollsData);
+        showOptions(data[0].polls[index].items, data[0].polls[index].question);
     	}, 
     	error: function(error){
     		console.log(error)
@@ -52,21 +70,21 @@ $(document).ready(function(){
 
 
     function processData(data){
-    	$("#question").text(data.question);
+    	
         $("canvas").empty();
     	items = [];
     	votes = [];
     	for(var i = 0; i<data.items.length; i++){
-    		items.push(data.items[i][0]);
-    		votes.push(data.items[i][1]);
+    		items.push(data.items[i].item);
+    		votes.push(data.items[i].votes);
     		genColors(items.length);
     		makeChart(items, votes, colors, borderColors);
     	}
     };
 
 
-    function showOptions(data){
-
+    function showOptions(data, question){
+        $("#question").text(question);
         var hiddenField = '<div class="form-group" id="hidden"> <li class="list-group-item">';
         hiddenField += '<input type="text" ' + 'value="' + user + '" name="userId">'
         hiddenField += '</li></div>'
@@ -81,12 +99,10 @@ $(document).ready(function(){
             listItem += '<div class="form-check"> <li class="list-group-item">';
             listItem += '<input class="form-check-input" type="checkbox" ' + 'name="index" value="' + i + '">';
             listItem += '<label class="form-check-label" for="' + i + '" >'
-            listItem += data[i][0];
+            listItem += data[i].item;
             listItem += '</label></li></div>';
             $('.list-group').append(listItem);
         }
-
-        $('.list-group').append('<input class="btn btn-success" type="submit" value="submit" id="submit"></input>');
     }
 
 

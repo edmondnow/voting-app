@@ -38,7 +38,7 @@ const UserSchema = new Schema({
 		minlength: 8
 	},
 
-	polls: [{question: {type: String, required: [true, 'Question is required']}, items: []}]
+	polls: [{question: {type: String, required: [true, 'Question is required']}, items: [{item: String, votes: Number}]}]
 });
 
 

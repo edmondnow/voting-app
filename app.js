@@ -102,7 +102,7 @@ app.post('/poll', upload.array(), function(req, res, next){
 	};
 	for(var i = 0; i< req.body.item.length; i++){
 
-		pollData.items.push([req.body.item[i], 0]);
+		pollData.items.push({item: req.body.item[i], votes: 0});
 
 	}
 	
@@ -190,8 +190,8 @@ app.get('', function(req, res){
 
 app.get('/pollpage*', function(req, res){
 	var userId;
-	var pollIndex = req.query.index;
-	if(req.session.id === null && req.session.id === undefined ){
+	var pollId = req.query.pollid ;
+	if(req.session.id === null || req.session.id === undefined ){
 		userId = req.query.user;
 	} else {
 		userId = req.session.userId;
@@ -211,15 +211,20 @@ app.get('/pollpage*', function(req, res){
 });
 
 app.get('/pollupdate',  function(req, res){
-		var pollItem = req.query.index;
-		User.findOne({_id: req.query.userId}, function(err, user){
+		var itemIndex = req.query.index;
+		var pollId = req.query.pollId;
+		console.log(req.query);
+		User.findOne({'polls._id': pollId}, function(err, user){
 			if(err){
 				console.log(err);
 			} else {
-
-				user.polls.id(req.query.pollId).items[pollItem].update({$inc: {'[1]':1 }});
-				user.save();
-				console.log(user.polls.id(req.query.pollId).items[pollItem][1]);
+				for(var i = 0; i<user.polls.length; i++){
+					if(user.polls[i]._id == pollId){
+						user.polls[i].items[itemIndex].votes++;
+						user.save();
+						res.send(user);
+					}
+				}
 			};
 
 		});

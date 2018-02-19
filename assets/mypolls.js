@@ -35,8 +35,8 @@ $(document).ready(function(){
     	items = [];
     	votes = [];
     	for(var i = 0; i<data.items.length; i++){
-    		items.push(data.items[i][0]);
-    		votes.push(data.items[i][1]);
+    		items.push(data.items[i].item);
+    		votes.push(data.items[i].votes);
     		genColors(items.length);
     		makeChart(items, votes, colors, borderColors);
     	}
