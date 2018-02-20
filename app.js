@@ -148,6 +148,16 @@ app.get('/polls', function(req, res){
 		 	
 	});
 
+});
+
+app.get('/pollsshow', function(req, res){
+	User.findOne({'polls._id': req.query.pollid}, function(error, data){	
+		console.log(data);
+		res.writeHead(200, {"Content-Type":"text/json"});	
+		var dataString = JSON.stringify(data);
+		res.end(dataString);
+	});
+
 
 
 })
@@ -197,11 +207,10 @@ app.get('/pollpage*', function(req, res){
 		userId = req.session.userId;
 	}
 
-	User.findById(userId)
-	.exec(function(error, user){
+	User.findOne({'polls._id': req.query.pollid}, function(error, user){
 		if(error){
 			console.log(error);
-		} else if (req.session.userId!=undefined){
+		} else if (req.session.userId!=undefined){	
 			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
 			res.render('pollpage', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
@@ -213,7 +222,6 @@ app.get('/pollpage*', function(req, res){
 app.get('/pollupdate',  function(req, res){
 		var itemIndex = req.query.index;
 		var pollId = req.query.pollId;
-		console.log(req.query);
 		User.findOne({'polls._id': pollId}, function(err, user){
 			if(err){
 				console.log(err);

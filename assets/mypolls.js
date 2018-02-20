@@ -8,7 +8,6 @@ $(document).ready(function(){
     $(document).on('click','li', function(){
         var pollIndex = parseInt($(this).attr('id'));
         $('li').removeClass('active');
-        console.log(pollsData[0].polls[pollIndex] + ' poll data check')
         if(pollsData[0].polls[pollIndex]==undefined){
             if(pollIndex==pollsData[0].polls.length-1){
                  processData(pollsData[0].polls[1]);
@@ -121,21 +120,22 @@ $(document).ready(function(){
             var id = $(this).attr('form');
             var pollId = $('#input' + id).attr('value');
             var url = '';
-           ;
+           console.log(pollId);
             if($(this).text()=='Delete'){
-                url = '/delete'
+                deletePolls(pollId, id);
             } else {
-                url = '/pollpage'
+                window.location.replace('http://localhost:3000/pollpage?pollid=' + pollId +'&index=' + id);
             }
 
-            console.log(typeof pollId);
+        });
+
+        function deletePolls(pollId, _id){
             $.ajax({
                 type:'GET',
-                url: url,
+                url: '/delete',
                 data: {pollid: pollId},
                 contentType: 'application/json',
                 success: function(data){
-                    console.log(data);
                     $('#' + id).remove();
                     $('li:first-of-type').trigger('click');
                     
@@ -144,6 +144,5 @@ $(document).ready(function(){
                     console.log(err)
                 }
             });
-
-        });
+        }
     })

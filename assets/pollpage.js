@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var borderColors;
     var pollsData;
     var myChart;
-    var user = getUrlVars()["user"];
+    var user;
     var index = getUrlVars()["index"];
     var poll = getUrlVars()["pollid"];
 
@@ -54,13 +54,13 @@ $(document).ready(function(){
 
     $.ajax({
     	type: 'GET',
-    	url: "/polls",
+    	url: "/pollsshow",
     	contentTypes: 'application/json',
-        data: {user: user, index: index, pollid: poll},
+        data: {index: index, pollid: poll},
     	success: function(data){
     	pollsData = data;
-        console.log(pollsData);
-        showOptions(data[0].polls[index].items, data[0].polls[index].question);
+        user = data._id;
+        showOptions(data.polls[index].items, data.polls[index].question);
     	}, 
     	error: function(error){
     		console.log(error)
