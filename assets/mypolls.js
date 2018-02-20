@@ -115,7 +115,7 @@ $(document).ready(function(){
 
         $('li > button').addClass('btn-custom');
     }
-        $('ul').on('click', '.page', function(e){
+        $('ul').on('click', '.page', function(){
             
             var id = $(this).attr('form');
             var pollId = $('#input' + id).attr('value');

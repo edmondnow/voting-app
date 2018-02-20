@@ -136,12 +136,14 @@ app.get('/logout', function(req, res,next){
 
 app.get('/polls', function(req, res){
 	if(JSON.stringify(req.query)!=='{}'){
-		userId = req.query.user;
+		userId = {_id: req.query.user};
+	} else if (req.session.userId){
+		userId = {_id: req.session.userId};
 	} else {
-		userId = req.session.userId;
-	};
+		userId = {};
+	}
 
-	User.find({_id: userId}).exec(function(error, data){	
+	User.find(userId).exec(function(error, data){	
 		res.writeHead(200, {"Content-Type":"text/json"});	
 		var dataString = JSON.stringify(data);
 		res.end(dataString);

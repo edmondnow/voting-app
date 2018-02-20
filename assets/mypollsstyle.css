@@ -102,7 +102,7 @@ i:hover {
 }
 
 
-li {
+.list-group-item {
 	width: 80%;
 	margin: 0 auto;
 	height: 40px;
