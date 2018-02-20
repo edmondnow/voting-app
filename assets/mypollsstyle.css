@@ -120,3 +120,12 @@ li {
 	float: right;
 	margin: 2px;
 }
+
+.active {
+	background-color: #3DC8FA !important;
+}
+
+input {
+	display: none;
+	visibility: hidden;
+}

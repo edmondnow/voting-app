@@ -232,16 +232,27 @@ app.get('/pollupdate',  function(req, res){
 		
 	
 	
+//Delete function for my polls
 
+app.get('/delete', function(req, res){
+	console.log(JSON.stringify(req.query.pollid) + ' this is it')
+	User.findOne({'polls._id': req.query.pollid}, function(error,user){
+		if(error){
+			console.log(error);
+		} else {
+			console.log(user);
+			for(var i = 0; i<user.polls.length; i++){
+				if(user.polls[i]._id == req.query.pollid){
+					console.log('success');
+					user.polls.splice(i,1);
+					user.save();
+					res.send('poll was deleted');
 
- /*
- User.findOne({_id: userId}).exec(function(error, result){
-	console.log(result.polls[0]);
+				}
+			}
+		}
 	});
-*/
-
-
-
+})
 
 
 //setup dashboard page

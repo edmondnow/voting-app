@@ -5,12 +5,22 @@ $(document).ready(function(){
 	var borderColors;
     var pollsData;
     var myChart;
-
-    $('ul').on('click','li', function(){
+    $(document).on('click','li', function(){
+        var pollIndex = parseInt($(this).attr('id'));
         $('li').removeClass('active');
-        $(this).addClass('active');
-        console.log(pollsData[0]);
-        processData(pollsData[0].polls[$(this).attr('id')]);
+        console.log(pollsData[0].polls[pollIndex] + ' poll data check')
+        if(pollsData[0].polls[pollIndex]==undefined){
+            if(pollIndex==pollsData[0].polls.length-1){
+                 processData(pollsData[0].polls[1]);
+               $("#" + pollsData[0].polls.length-2).addClass('active');
+            } else {
+               processData(pollsData[0].polls[0]);
+               $("#" + pollsData[0].polls.length-1).addClass('active');
+           }
+        } else {
+            processData(pollsData[0].polls[pollIndex]);
+            $(this).addClass('active');
+        }
     })
 
     $.ajax({
@@ -65,7 +75,6 @@ $(document).ready(function(){
 	    var currentPoll = $('#pollChart');
         
         if(myChart!=undefined){
-            console.log('destroy');
             myChart.destroy();
         }
 		myChart = new Chart(currentPoll, {
@@ -94,9 +103,11 @@ $(document).ready(function(){
 
     function displayPolls(polls){
     	for(var i = polls.length-1; i>=0&&i>polls.length-9; i--){
-    		var listHtml = '<li class="list-group-item"' + ' id="' + i + '">'+ polls[i].question
-            listHtml += '<button class="btn btn-sm btn-danger">Delete</button>';
-            listHtml += '<button class="btn btn-sm btn-success">Page</button></li>';
+    		var listHtml = '<li class="list-group-item"' + ' id="' + i + '">'+ polls[i].question;
+            listHtml += '<input type="hidden" name="pollid"  value="' + polls[i]._id + '" id="input' + i + '">';
+            listHtml += '<button type="submit" class="btn btn-sm btn-danger page" form="'+i+'">Delete</button>';
+            listHtml += '<button type="submit" class="btn btn-sm btn-success page" form="'+i+'">Page</button>';
+            listHtml += '</li>';
     		$(".list-group").append(listHtml);
     		if(i===polls.length-1){
     			$(".list-group-item").addClass("active");
@@ -105,7 +116,34 @@ $(document).ready(function(){
 
         $('li > button').addClass('btn-custom');
     }
+        $('ul').on('click', '.page', function(e){
+            
+            var id = $(this).attr('form');
+            var pollId = $('#input' + id).attr('value');
+            var url = '';
+           ;
+            if($(this).text()=='Delete'){
+                url = '/delete'
+            } else {
+                url = '/pollpage'
+            }
 
+            console.log(typeof pollId);
+            $.ajax({
+                type:'GET',
+                url: url,
+                data: {pollid: pollId},
+                contentType: 'application/json',
+                success: function(data){
+                    console.log(data);
+                    $('#' + id).remove();
+                    $('li:first-of-type').trigger('click');
+                    
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            });
 
-
-});
+        });
+    })
