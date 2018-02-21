@@ -106,6 +106,7 @@ $(document).ready(function(){
             listHtml += '<input type="hidden" name="pollid"  value="' + polls[i]._id + '" id="input' + i + '">';
             listHtml += '<button type="submit" class="btn btn-sm btn-danger page" form="'+i+'">Delete</button>';
             listHtml += '<button type="submit" class="btn btn-sm btn-success page" form="'+i+'">Page</button>';
+            listHtml += '<button type="submit" class="btn btn-sm btn-default page" form="'+i+'">Edit</button>';
             listHtml += '</li>';
     		$(".list-group").append(listHtml);
     		if(i===polls.length-1){
@@ -122,8 +123,10 @@ $(document).ready(function(){
             var url = '';
             if($(this).text()=='Delete'){
                 deletePolls(pollId, id);
-            } else {
+            } else if ($(this).text()=="Page"){
                 window.location.replace('http://localhost:3000/pollpage?pollid=' + pollId +'&index=' + id);
+            } else {
+                window.location.replace('http://localhost:3000/edit?pollid=' + pollId);
             }
 
         });

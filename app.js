@@ -278,11 +278,47 @@ app.get('/create', function(req, res){
 			res.render('create', {session: false, login: login,  logout: logout, name: signup})
 		}
 	})
-
-
-
-	
-	
 });
+
+//setup edit page get and post requests
+
+app.get('/edit', function(req, res){
+	var pollId = req.query.pollid;
+
+	User.findOne({'polls._id' : pollId}, function(err, user){
+		if(err) console.log(err)
+		if(user){
+			for(var i = 0; i< user.polls.length; i++){
+				if(user.polls[i]._id == pollId){
+					var data = user.polls[i];
+					var name = '<a class="nav-link" href="#">' + user.username + '</a>';
+					var question = '<div class="option">';
+					var viewData = {};
+					question += '<input class="form-control" type="text" id="pollQ" value="' + data.question + '" name="question">';
+					question += '</div>';
+					viewData.question = question;
+					var items = '';
+					viewData.items = '';
+
+					data.items.forEach(function(item){
+						items += '<div class="option">';
+						items += '<input class="form-control" type="text" value="' + item.item + '" id="' + item._id + '" name="item"><i class="fa fa-times"></i>'
+						items += '</div>'
+					});
+
+					viewData.items = items;
+
+
+			
+					res.render('edit', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup, data: viewData })
+				}
+			}
+		}
+	});
+});
+
+	
+	
+
 
 
