@@ -120,7 +120,6 @@ $(document).ready(function(){
             var id = $(this).attr('form');
             var pollId = $('#input' + id).attr('value');
             var url = '';
-           console.log(pollId);
             if($(this).text()=='Delete'){
                 deletePolls(pollId, id);
             } else {
@@ -129,7 +128,7 @@ $(document).ready(function(){
 
         });
 
-        function deletePolls(pollId, _id){
+        function deletePolls(pollId, id){
             $.ajax({
                 type:'GET',
                 url: '/delete',
