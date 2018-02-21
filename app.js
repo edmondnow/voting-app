@@ -154,7 +154,6 @@ app.get('/polls', function(req, res){
 
 app.get('/pollsshow', function(req, res){
 	User.findOne({'polls._id': req.query.pollid}, function(error, data){	
-		console.log(data);
 		res.writeHead(200, {"Content-Type":"text/json"});	
 		var dataString = JSON.stringify(data);
 		res.end(dataString);
@@ -166,7 +165,6 @@ app.get('/pollsshow', function(req, res){
 
 //setup mypolls page
 app.get('/mypolls', function(req, res, next){
-	console.log(req.session.userId);
 	User.findById(req.session.userId)
 	.exec(function (error, user){
 		if(error){
@@ -245,7 +243,6 @@ app.get('/pollupdate',  function(req, res){
 //Delete function for my polls
 
 app.get('/delete', function(req, res){
-	console.log(JSON.stringify(req.query.pollid) + ' this is it')
 	User.findOne({'polls._id': req.query.pollid}, function(error,user){
 		if(error){
 			console.log(error);
@@ -253,7 +250,6 @@ app.get('/delete', function(req, res){
 			console.log(user);
 			for(var i = 0; i<user.polls.length; i++){
 				if(user.polls[i]._id == req.query.pollid){
-					console.log('success');
 					user.polls.splice(i,1);
 					user.save();
 					res.send('poll was deleted');
@@ -302,7 +298,7 @@ app.get('/edit', function(req, res){
 
 					data.items.forEach(function(item){
 						items += '<div class="option">';
-						items += '<input class="form-control" type="text" value="' + item.item + '" id="' + item._id + '" name="item"><i class="fa fa-times"></i>'
+						items += '<input class="form-control" type="text" value="' + item.item + '" id="' + item._id + '" name="item" required><i class="fa fa-times"></i>'
 						items += '</div>'
 					});
 
@@ -318,7 +314,35 @@ app.get('/edit', function(req, res){
 });
 
 	
-	
+app.get('/polledit', function(req, res){
+	User.findOne({'polls._id': req.query.pollid}, function(err, user){
+		if(err) console.log(error);
+		if(user){
+			for(var i = 0; i < user.polls.length; i++){
+				if(user.polls[i]._id = req.query.pollid){
+					console.log(req.query.question + ' question');
+					user.polls[i].question = req.query.question;
+					for(var j = 0; j < req.query.items.length; j++ ){
+						user.polls[i].items.forEach(function(item){
+							if(item._id == req.query.items[j]._id){
+								console.log(req.query.items[j].item)
+								item.item = req.query.items[j].item;
+							} 
+						})
 
+						if(req.query.items[j]._id === 'new'){
+							console.log(req.query.items[j].item)
+							user.polls[i].items.push({item: req.query.items[j].item, votes: 0})
+						}
+
+					}
+				}
+			}
+			user.save()
+		}
+
+		res.send('http://localhost:3000/mypolls')
+	})
+})
 
 

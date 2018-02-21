@@ -58,17 +58,17 @@
 		<form method="post" action="/poll" target="/mypolls" enctype="multipart/form-data" class="text-center">
 			<label for="pollQ">What is your poll about?</label>
 			<div class="option">
-			<input class="form-control" type="text" id="pollQ" placeholder="Dota, League or Heroes?" name='question'>
+			<input class="form-control" type="text" id="pollQ" placeholder="Dota, League or Heroes?" name='question' required>
 			</div>
 			<label id="beginning">Add poll options</label>
 			<div class="option">
-			<input class="form-control" type="text" placeholder="Dota, for sure." name='item'><i class="fa fa-times icon"></i>
+			<input class="form-control" type="text" placeholder="Dota, for sure." name='item' required=""><i class="fa fa-times icon"></i>
 			</div>
 			<div class="option">
-			<input class="form-control" type="text" placeholder="League, of course!" name='item'><i class="fa fa-times icon"></i>
+			<input class="form-control" type="text" placeholder="League, of course!" name='item' required><i class="fa fa-times icon"></i>
 			</div>
 			<div class="option">
-			<input class="form-control" type="text" placeholder="Heroes. Umh, Blizzard rocks?" name='item'><i class="fa fa-times"></i>
+			<input class="form-control" type="text" placeholder="Heroes. Umh, Blizzard rocks?" name='item' required><i class="fa fa-times"></i>
 			</div>
 			<button class="btn btn-md btn-info" id="addoption" type="button">Add options</button><br />
 			<input class="btn btn-md btn-success" type="submit">
