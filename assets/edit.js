@@ -34,8 +34,7 @@ function getData(){
     for(var i = 1; i< items.length; i++){
     	var value = $(items[i]).val();
     	var id = $(items[i]).attr('id');
-    	console.log(value + 'this one')
-    	var itemObject = {item: value, _id: id};
+   	  	var itemObject = {item: value, _id: id};
     	postData.items.push(itemObject);
     }
 
@@ -45,15 +44,15 @@ function getData(){
 
 $("#submit").click(function(e){
 	e.preventDefault();
-	e.isDefaultPrevented();
-	console.log('click');
+	e.isDefaultPrevented();;
 	$.ajax({
 		type: 'GET',
 		url: '/polledit',
 		contentType: 'application/json',
 		data: getData(),
-		succes: function(url){
-			window.location.replace('url');
+		success: function(){
+			console.log('success');
+			window.location.replace('http://localhost:3000/mypolls');
 		},
 		error: function(error){
 			console.log(error);

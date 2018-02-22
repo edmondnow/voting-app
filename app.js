@@ -320,18 +320,15 @@ app.get('/polledit', function(req, res){
 		if(user){
 			for(var i = 0; i < user.polls.length; i++){
 				if(user.polls[i]._id = req.query.pollid){
-					console.log(req.query.question + ' question');
 					user.polls[i].question = req.query.question;
 					for(var j = 0; j < req.query.items.length; j++ ){
 						user.polls[i].items.forEach(function(item){
 							if(item._id == req.query.items[j]._id){
-								console.log(req.query.items[j].item)
 								item.item = req.query.items[j].item;
 							} 
 						})
 
 						if(req.query.items[j]._id === 'new'){
-							console.log(req.query.items[j].item)
 							user.polls[i].items.push({item: req.query.items[j].item, votes: 0})
 						}
 
@@ -341,8 +338,8 @@ app.get('/polledit', function(req, res){
 			user.save()
 		}
 
-		res.send('http://localhost:3000/mypolls')
 	})
+	res.send('success')
 })
 
 
