@@ -88,7 +88,7 @@ app.post('/', upload.array(), function(req, res, next){
 			}
 		});
 	} else {
-		var err = new Error('ALl fields required.');
+		var err = new Error('All fields required.');
 		err.status = 400;
 		return next(err);
 	}
@@ -135,14 +135,14 @@ app.get('/logout', function(req, res,next){
 });
 
 app.get('/polls', function(req, res){
-	if(JSON.stringify(req.query)!=='{}'){
-		userId = {_id: req.query.user};
+	if(req.query.index == true || req.query.index != undefined){
+		userId = {};
 	} else if (req.session.userId){
 		userId = {_id: req.session.userId};
-	} else {
-		userId = {};
+	} else if (req.query.userId){
+		userId = {_id: req.query.userId};
 	}
-
+	
 	User.find(userId).exec(function(error, data){	
 		res.writeHead(200, {"Content-Type":"text/json"});	
 		var dataString = JSON.stringify(data);
@@ -182,7 +182,14 @@ app.get('/mypolls', function(req, res, next){
 
 //setup landing page
 app.get('', function(req, res){
-	
+
+	var sessionItem = '<li class="nav-item"><a class="nav-link nav-link-user" href="/create">Create Poll<span class="sr-only">(current)</span></a></li><li class="nav-item nav-link-user"> <a class="nav-link" href="/mypolls">My Polls<span class="sr-only">(current)</span></a></li>'
+	var noSessionButton = '<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-sign">Sign-Up</button></div>'
+	var sessionButton = '<button class="btn btn-success btn-lg" onclick="window.location=\'/create\';">Create Polls</button>'
+		sessionButton += '<button class="btn btn-warning btn-lg" onclick="window.location=\'#allpolls\';">All polls</button>'
+		sessionButton += '<button class="btn btn-info btn-lg" onclick="window.location=\'/mypolls\';">My Polls</button>'
+		    	
+
 
 	User.findById(req.session.userId).
 	exec(function(error, user){
@@ -190,9 +197,9 @@ app.get('', function(req, res){
 			return next(error)
 		} else if (req.session&&user!=null){
 			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
-			res.render('index', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
+			res.render('index', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup, sessiondata: sessionItem, sessionbutton: sessionButton, nosessionbutton: noSessionButton})
 		} else {
-			res.render('index', {session: false, login: login,  logout: logout, signup: signup})
+			res.render('index', {session: false, login: login,  logout: logout, signup: signup, sessiondata: sessionItem,sessionbutton: sessionButton, nosessionbutton: noSessionButton});
 		}
 	});
 });
@@ -319,7 +326,7 @@ app.get('/polledit', function(req, res){
 		if(err) console.log(error);
 		if(user){
 			for(var i = 0; i < user.polls.length; i++){
-				if(user.polls[i]._id = req.query.pollid){
+				if(user.polls[i]._id == req.query.pollid){
 					user.polls[i].question = req.query.question;
 					for(var j = 0; j < req.query.items.length; j++ ){
 						user.polls[i].items.forEach(function(item){

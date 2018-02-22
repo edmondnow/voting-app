@@ -4,6 +4,7 @@ $.ajax({
 	type: 'GET',
 	url: "/polls",
 	contentType: 'application/json',
+	data: {user: {}, index: true},
 	success: function(data){
     displayPolls(data);
 	},
@@ -18,7 +19,7 @@ function displayPolls(data){
 	for(var j = 0; j<data.length; j++){
 		var polls = data[j].polls;
 		for(var i = polls.length-1; i>=0&&i>polls.length-20; i--){
-			var listHtml = '<li class="list-group-item"' + ' id="' + i + '">'+ polls[i].question;
+			var listHtml = '<li class="list-group-item"' + ' id="' + i + '">'+ data[j].username + ': ' + polls[i].question;
 	        listHtml += '<input type="hidden" name="pollid"  value="' + polls[i]._id + '" id="input' + i + '">';
 	        listHtml += '</li>';
 			$(".list-group").append(listHtml);

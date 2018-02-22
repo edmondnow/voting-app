@@ -31,11 +31,11 @@
 		    	<li class="nav-item active">
 		    		<a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
 		    	</li>
-		    	<li class="nav-item">
-		    		<a class="nav-link nav-link-user" href="/create">Create Poll<span class="sr-only">(current)</span></a>
-		    	</li>
-		    	<li class="nav-item nav-link-user">
-		    		<a class="nav-link" href="/mypolls">My Polls<span class="sr-only">(current)</span></a>
+		    	<% if(session==true){ %>
+		    		<%- sessiondata %>
+		    		<% } %>
+		    	<li class="nav-item nav-active">
+		    		<a class="nav-link" href="/#allpolls">All Polls<span class="sr-only">(current)</span></a>
 		    	</li>
 		    </ul>
 		    <ul class="navbar-nav ml-auto">
@@ -61,7 +61,11 @@
 		<h1 class="votex">VoteX</h1>
 		<p class="desc">Chillwave gochujang hot chicken XOXO mlkshk street art.</p>
 		<div class="text-center">
-		<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-sign">Sign-Up</button>
+			 <% if(session==true) { %>
+			<%- sessionbutton %>
+			<% } else { %>	
+			<%- nosessionbutton %>
+			<% } %>
 		</div>
 	</div>
 	<div class="container-fluid info">
@@ -90,14 +94,16 @@
 		</div>
 	</div>
 	<div class="container-fluid text-center pollsection">
-		<div class="row">
-			<div class="col-md">
-				<h1 id="yourpolls" class="votex">Current polls</h1>
-				<p class="desc">Check out and vote on our polls. </p>
-				<ul class="list-group">
-				</ul>
+		<section id="allpolls">
+			<div class="row">
+				<div class="col-md">
+					<h1 id="yourpolls">Current polls</h1>
+					<p class="desc">Check out and vote on our polls. </p>
+					<ul class="list-group">
+					</ul>
+				</div>
 			</div>
-		</div>
+		</section>
 	</div>
 	<div class="container-fluid text-center footer">
 		<p>for FreeCodeCamp - @edmondnow</p>

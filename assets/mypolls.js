@@ -147,4 +147,4 @@ $(document).ready(function(){
                 }
             });
         }
-    })
+})

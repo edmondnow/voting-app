@@ -36,6 +36,9 @@
 		    	<li class="nav-item nav-active">
 		    		<a class="nav-link" href="/mypolls">My Polls<span class="sr-only">(current)</span></a>
 		    	</li>
+		    	<li class="nav-item nav-active">
+		    		<a class="nav-link" href="/#allpolls">All Polls<span class="sr-only">(current)</span></a>
+		    	</li>
 		    </ul>
 		    <ul class="navbar-nav ml-auto">
 		    	<li class="nav-item">
@@ -51,7 +54,9 @@
 	<div class="container-fluid text-center banner">
 		<h1>Vote Page</h1>
 		<h3>Vote for the best option!</h3>
-		<button class="btn btn-success btn-lg" id="newpoll" onclick="window.location='/create';">Create Poll</button>
+		<button class="btn btn-success btn-lg" onclick="window.location='/create';">Create Polls</button>
+		<button class="btn btn-info btn-lg" onclick="window.location='/mypolls';">My Polls</button>
+		<button class="btn btn-warning btn-lg" onclick="window.location='/#allpolls';">All polls</button>
 	</div>
 	<div class="container-fluid text-center voteCont">
 				<h2 id="question">Vote</h2>
