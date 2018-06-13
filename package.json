@@ -24,7 +24,7 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
-    "chart.js": "^2.7.1",
+    "chart.js": "^2.7.2",
     "connect-mongo": "^2.0.1",
     "ejs": "^2.5.7",
     "ejs-lint": "^0.3.0",
