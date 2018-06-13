@@ -89,3 +89,8 @@ i:hover {
 .icon {
 	visibility: hidden;
 }
+
+.footer {
+	padding: 20px !important;
+	background-color: #F3F3F3;
+}

@@ -26,8 +26,8 @@ $(document).ready(function(){
 
 
     $('.list-group').on('click','.list-group-item', function(){
-        $('li').removeClass('activated');
-        $(this).addClass('activated');
+        $('li').removeClass('active');
+        $(this).addClass('active');
         $('input').attr('checked', false);
         $(this).find('input').attr('checked', true);
     });

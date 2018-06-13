@@ -10,7 +10,7 @@ const MongoStore = require("connect-mongo")(session);
 const chart = require('chart.js');
 const lint = require('ejs-lint');
 const bodyParser = require('body-parser');
-
+//const keys = require('./keys.js');
 
 
 app.use(bodyParser.json({ extended: true }));
@@ -20,9 +20,9 @@ app.set('view engine', 'ejs');
 
 //connect to db
 
-mongoose.connect("mongodb://localhost/voting");
+mongoose.connect(`mongodb://${process.env.USER}:${process.env.PASS}@ds119049.mlab.com:19049/votex`);
 
-mongoose.connection.once('open', function(){
+mongoose.connection.once('pen', function(){
 	console.log("Connection made. Now for fireworks... ");
 }).on("error", function(error){
 	console.log("Connection error: " + error);
@@ -42,11 +42,11 @@ app.use(session({
 app.use('/assets', express.static('assets'));
 
 //setup port
-app.listen(process.env.port || 3000);
+app.listen(process.env.PORT || 3000);
 console.log('Now listening to requests.');
 
-var signup ='<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-sign">Sign-Up</a>';
-var login = '<a class="nav-link" href="#" data-toggle="modal" data-target="#modal-login">Login</a>';
+var signup ='<a class="nav-link" data-toggle="modal" data-target="#modal-sign">Sign-Up</a>';
+var login = '<a class="nav-link"  data-toggle="modal" data-target="#modal-login">Login</a>';
 var logout = '<a class="nav-link" href="/logout">Logout</a>';
 
 
@@ -116,6 +116,8 @@ app.post('/poll', upload.array(), function(req, res, next){
 	
 });
 
+
+
 		
 
 
@@ -170,7 +172,7 @@ app.get('/mypolls', function(req, res, next){
 		if(error){
 			console.log(error);
 		}  else if (req.session&&user!=null){
-			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			var name = '<a class="nav-link" href="/mypolls">' + user.username + '</a>'
 			res.render('mypolls', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
 			res.render('mypolls', {session: false, login: login,  logout: logout, name: signup})
@@ -196,7 +198,7 @@ app.get('', function(req, res){
 		if(error){
 			return next(error)
 		} else if (req.session&&user!=null){
-			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			var name = '<a class="nav-link" href="/mypolls">' + user.username + '</a>'
 			res.render('index', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup, sessiondata: sessionItem, sessionbutton: sessionButton, nosessionbutton: noSessionButton})
 		} else {
 			res.render('index', {session: false, login: login,  logout: logout, signup: signup, sessiondata: sessionItem,sessionbutton: sessionButton, nosessionbutton: noSessionButton});
@@ -218,7 +220,7 @@ app.get('/pollpage*', function(req, res){
 		if(error){
 			console.log(error);
 		} else if (req.session.userId!=undefined){	
-			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			var name = '<a class="nav-link" href="/mypolls">' + user.username + '</a>'
 			res.render('pollpage', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
 			res.render('pollpage', {session: false, login: login,  logout: logout, name: signup})
@@ -275,7 +277,7 @@ app.get('/create', function(req, res){
 		if(error){
 			return next(error);
 		}  else if (req.session.userId!=null){
-			var name = '<a class="nav-link" href="#">' + user.username + '</a>'
+			var name = '<a class="nav-link" href="/mypolls">' + user.username + '</a>'
 			res.render('create', {session: true, name: name, email: user.email, login: login,  logout: logout, signup: signup})
 		} else {
 			res.render('create', {session: false, login: login,  logout: logout, name: signup})
@@ -294,7 +296,7 @@ app.get('/edit', function(req, res){
 			for(var i = 0; i< user.polls.length; i++){
 				if(user.polls[i]._id == pollId){
 					var data = user.polls[i];
-					var name = '<a class="nav-link" href="#">' + user.username + '</a>';
+					var name = '<a class="nav-link" href="/mypolls">' + user.username + '</a>';
 					var question = '<div class="option">';
 					var viewData = {};
 					question += '<input class="form-control" type="text" id="pollQ" value="' + data.question + '" name="question">';
